@@ -130,7 +130,7 @@ powerful - 1
 
 Longest Word: algorithms, structures
 Shortest Word: are, and
-Average Word Length: 6.00
+Average Word Length: 5.888888888888889
 Number of Sentences: 2
 Unique Words: 8
 ```
