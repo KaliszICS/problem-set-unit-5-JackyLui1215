@@ -8,15 +8,12 @@
 
 ### Option 1: Basic Text Analyzer (80%)
 
-Create a text analyzer program where the user inputs a sentence or paragraph and the program analyzes the text.
+Create a text analyzer program where the user inputs a sentence or paragraph and the program analyzes the text.</br>
+The program must follow the following specifications:</br>
 
-The program must follow the following specifications:
-
-Display a welcome message.
-
-Ask the user to input a sentence or paragraph.
-
-Count and output:
+Display a welcome message.</br>
+Ask the user to input a sentence or paragraph.</br>
+Count and output:</br>
 
   - Total number of characters
   - Total number of words
@@ -34,9 +31,9 @@ Welcome to the Text Analyzer.
 
 Please enter a sentence or paragraph: Java is fun and java is powerful.
 
-Total Characters: 37
+Total Characters: 33
 Total Words: 7
-Total Vowels: 12
+Total Vowels: 11
 Total Spaces: 6
 
 Word Frequency:
@@ -50,9 +47,8 @@ powerful - 1
 
 ### Option 2: Remove Punctuation and Ignore Common Words (+10%)
 
-Do all of the above but add one extra feature.
-
-Before analyzing the text, remove punctuation from all words.
+Do all of the above but add one extra feature.</br>
+Before analyzing the text, remove punctuation from all words.</br>
 
 For example:
 
@@ -81,9 +77,9 @@ Please enter a sentence or paragraph:
 
 Hello, hello! Java programming is fun.
 
-Total Characters: 40
+Total Characters: 38
 Total Words: 6
-Total Vowels: 12
+Total Vowels: 11
 Total Spaces: 5
 
 Word Frequency:
@@ -91,7 +87,6 @@ Word Frequency:
 hello - 2
 java - 1
 programming - 1
-is - 1
 fun - 1
 ```
 
@@ -107,7 +102,7 @@ Add the following features:
   - Output the number of sentences
   - Output how many unique words there are
 
-If there are multiple longest, shortest, or most common words, you must output all of them.
+If there are multiple longest, or shortest you must output all of them.
 
 Example Run:
 
@@ -118,9 +113,9 @@ Please enter a sentence or paragraph:
 
 Data structures and algorithms are important. Data is powerful.
 
-Total Characters: 64
+Total Characters: 63
 Total Words: 9
-Total Vowels: 22
+Total Vowels: 20
 Total Spaces: 8
 
 Word Frequency:
@@ -131,11 +126,10 @@ and - 1
 algorithms - 1
 are - 1
 important - 1
-is - 1
 powerful - 1
 
 Longest Word: algorithms, structures
-Shortest Word: is
+Shortest Word: are, and
 Average Word Length: 6.00
 Number of Sentences: 2
 Unique Words: 8
