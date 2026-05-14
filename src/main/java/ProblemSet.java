@@ -34,7 +34,7 @@ public class ProblemSet {
 		}
 
 		if (filtered.size() == 0 || unfiltered.length == 0) {
-			System.out.println("no valid word was detected.");
+			System.out.println("No valid word was detected.");
 			scanner.close();
 			return;
 		}
@@ -98,8 +98,8 @@ public class ProblemSet {
 		System.out.println("\nWord Frequency: \n");	
 		frequencies(filtered); //prints out the amount of time each unique word occurs
 	
-		System.out.println("\nLongest Word: " + longest);
-		System.out.println("Shortest Word: " + shortest);
+		System.out.println("\nLongest Word: " + longest.toString().replace("[", "").replace("]", ""));
+		System.out.println("Shortest Word: " + shortest.toString().replace("[", "").replace("]", ""));
 		System.out.println("Average Word Length: " + averageLength);
 		System.out.println("Number of sentences: " + sentences);
 		System.out.println("Unique Words: " + uniqueWords);
