@@ -39,7 +39,8 @@ public class ProblemSet {
 		for (int i = 0; i < unfiltered.length; i ++) { //creates an filteredayList of sentence or paragraph
 			if (!unfiltered[i].isBlank()) {
 				String word = unfiltered[i];
-				if (!(word.equals("a") || word.equals("is") || word.equals("an") || word.equals("the"))) {
+				if (!(word.equals("a") || word.equals("is") || word.equals("an") 
+					|| word.equals("the") || word.equals("and"))) {
 					filtered.add(unfiltered[i]);
 				}
 		}
