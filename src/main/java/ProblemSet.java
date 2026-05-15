@@ -12,7 +12,6 @@
 
 import java.util.Scanner;
 import java.util.HashMap;
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 public class ProblemSet {
 
@@ -39,8 +38,7 @@ public class ProblemSet {
 		for (int i = 0; i < unfiltered.length; i ++) { //creates an filteredayList of sentence or paragraph
 			if (!unfiltered[i].isBlank()) {
 				String word = unfiltered[i];
-				if (!(word.equals("a") || word.equals("is") || word.equals("an") 
-					|| word.equals("the") || word.equals("and"))) {
+				if (!(word.equals("a") || word.equals("is") || word.equals("an") || word.equals("the") || word.equals("and"))) {
 					filtered.add(unfiltered[i]);
 				}
 		}
@@ -58,6 +56,10 @@ public class ProblemSet {
 		int totalVowels = 0;
 		int totalSpaces = 0;
 		int uniqueWords = 0;
+		Double averageLength = 0.0;
+		int wordLong = filtered.get(0).length();
+		int wordShort = filtered.get(0).length();
+		uniqueWords = unique(filtered).size();
 
 		for (int i = 0; i < sentenceOrParagraph.length(); i++) {
 			char c = sentenceOrParagraph.charAt(i);
@@ -72,12 +74,6 @@ public class ProblemSet {
 			}
 		}	
 
-		//delcaring important variables
-		Double averageLength = 0.0;
-		int wordLong = filtered.get(0).length();
-		int wordShort = filtered.get(0).length();
-		uniqueWords = unique(filtered).size();
-
 		for (int i = 0; i < filtered.size(); i ++) { //compares all lengths of all words to determine smallest value
 			if (wordLong < filtered.get(i).length()) {
 				wordLong = filtered.get(i).length();
@@ -90,10 +86,10 @@ public class ProblemSet {
 		ArrayList<String> longest = new ArrayList<String>();
 		ArrayList<String> shortest = new ArrayList<String>();
 		for (int i = 0; i < filtered.size(); i ++) { //finds all words with the highest length
-			if (filtered.get(i).length() == wordLong) {
+			if (filtered.get(i).length() == wordLong && !longest.contains(filtered.get(i))) {
 				longest.add(filtered.get(i));
 			}
-			if(filtered.get(i).length() == wordShort) { //finds all words with the lowest length
+			if(filtered.get(i).length() == wordShort && !shortest.contains(filtered.get(i))) { //finds all words with the lowest length
 				shortest.add(filtered.get(i));
 			}
 		}
@@ -144,7 +140,7 @@ public class ProblemSet {
 
 	public static void frequencies(ArrayList<String> filtered) {
 		HashMap<String, Integer> frequencies = unique(filtered);
-		ArrayDeque<String> isSeen = new ArrayDeque<String>(); //temporaroy storage of words used
+		ArrayList<String> isSeen = new ArrayList<String>(); //temporaroy storage of words used
 		int count = 0;
 		for (int i = 0; i < filtered.size(); i++) {
 			String currentWord = filtered.get(i);
@@ -155,6 +151,5 @@ public class ProblemSet {
 				
 			}
 	}
-	}
-
+	}	
 }
