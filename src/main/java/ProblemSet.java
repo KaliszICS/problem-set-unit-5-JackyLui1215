@@ -1,3 +1,15 @@
+/**
+
+        * File: Problem Set 5
+
+        * Author: Jacky lui
+
+        * Date Created: May 12, 2026
+
+        * Date Last Modified: May 15, 2026
+
+        */
+
 import java.util.Scanner;
 import java.util.HashMap;
 import java.util.ArrayDeque;
