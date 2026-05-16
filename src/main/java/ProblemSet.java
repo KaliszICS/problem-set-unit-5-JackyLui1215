@@ -19,32 +19,23 @@ public class ProblemSet {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Welcome to the Text Analyzer! \n");
 		System.out.print("Please eneter a sentence or paragraph: ");
-		String sentenceOrParagraph = scanner.nextLine();
-		
-		//Determines amount of sentences present
-		int sentences = 0;
-		for (int i = 0; i < sentenceOrParagraph.length(); i++) {
-			char c = sentenceOrParagraph.charAt(i);
-			if (c == '.' || c == '!' || c == '?') {
-				sentences++;
+		String userInput = scanner.nextLine();
+
+		String original = userInput;
+		userInput = userInput.replaceAll("[,!.?;:']", "").toLowerCase(); //removes all puntuation and makes all characters lowercase
+		String[] unfilteredWords = userInput.split(" "); //converts to Array
+		ArrayList<String> filteredWords = new ArrayList<String>();
+
+		for (int i = 0; i < unfilteredWords.length; i ++) { //creates an filteredWordsayList of sentence or paragraph
+			if (!unfilteredWords[i].isBlank()) {
+				String word = unfilteredWords[i];
+				if (!(word.equals("a") || word.equals("is") || word.equals("an") || word.equals("the") || word.equals("and"))) {
+					filteredWords.add(unfilteredWords[i]);
+				}
 			}
 		}
 
-		String original = sentenceOrParagraph;
-		sentenceOrParagraph = sentenceOrParagraph.replaceAll("[,!.?;:']", "").toLowerCase(); //removes all puntuation and makes all characters lowercase
-		String[] unfiltered = sentenceOrParagraph.split(" ");
-		ArrayList<String> filtered = new ArrayList<String>();
-		
-		for (int i = 0; i < unfiltered.length; i ++) { //creates an filteredayList of sentence or paragraph
-			if (!unfiltered[i].isBlank()) {
-				String word = unfiltered[i];
-				if (!(word.equals("a") || word.equals("is") || word.equals("an") || word.equals("the") || word.equals("and"))) {
-					filtered.add(unfiltered[i]);
-				}
-		}
-		}
-
-		if (filtered.size() == 0 || unfiltered.length == 0) {
+		if (filteredWords.size() == 0 || unfilteredWords.length == 0) { //ensures input is not blank
 			System.out.println("No valid word was detected.");
 			scanner.close();
 			return;
@@ -52,104 +43,138 @@ public class ProblemSet {
 
 		//declaring important variables
 		int totalCharacters = original.length();
-		int totalWords = unfiltered.length;
-		int totalVowels = 0;
-		int totalSpaces = 0;
-		int uniqueWords = 0;
-		Double averageLength = 0.0;
-		int wordLong = filtered.get(0).length();
-		int wordShort = filtered.get(0).length();
-		uniqueWords = unique(filtered).size();
-
-		for (int i = 0; i < sentenceOrParagraph.length(); i++) {
-			char c = sentenceOrParagraph.charAt(i);
-			if (isVowel(c)) { //uses isVowel method
-				totalVowels++;
-			}
-			if(c == 'y' && i != 0 ) {
-				totalVowels++;
-			}
-			if(c == ' ') { //counts the amount of spaces present
-				totalSpaces++;
-			}
-		}	
-
-		for (int i = 0; i < filtered.size(); i ++) { //compares all lengths of all words to determine smallest value
-			if (wordLong < filtered.get(i).length()) {
-				wordLong = filtered.get(i).length();
-			}
-			if (wordShort > filtered.get(i).length()) {
-				wordShort = filtered.get(i).length();
-			}
-		}
-
-		ArrayList<String> longest = new ArrayList<String>();
-		ArrayList<String> shortest = new ArrayList<String>();
-		for (int i = 0; i < filtered.size(); i ++) { //finds all words with the highest length
-			if (filtered.get(i).length() == wordLong && !longest.contains(filtered.get(i))) {
-				longest.add(filtered.get(i));
-			}
-			if(filtered.get(i).length() == wordShort && !shortest.contains(filtered.get(i))) { //finds all words with the lowest length
-				shortest.add(filtered.get(i));
-			}
-		}
-
-		for (int i = 0; i < unfiltered.length; i++) { //sum of all words
-			averageLength += unfiltered[i].length();
-		}
-		averageLength = averageLength / totalWords;
+		int totalWords = unfilteredWords.length;
+		int sentences = sentenceCounter(original);
+		int totalVowels = vowelCounter(original);
+		int totalSpaces = spaceCounter(original);
+		int uniqueWords = unique(filteredWords).size();
+		Double averageLength = averageLength(unfilteredWords);
+		String longestWord = maxLength(filteredWords).toString().replace("[", "").replace("]", "");
+		String shortestWord = shortestWord(filteredWords).toString().replace("[", "").replace("]", "");
 		
 		//OUTPUT
 		System.out.println("\nTotal Characters: " + totalCharacters);
 		System.out.println("Total Words: " + totalWords);
 		System.out.println("Total Vowels: " + totalVowels);
 		System.out.println("Total Spaces: " + totalSpaces);
-		System.out.println("\nWord Frequency: \n");	
-		frequencies(filtered); //prints out the amount of time each unique word occurs
-	
-		System.out.println("\nLongest Word: " + longest.toString().replace("[", "").replace("]", ""));
-		System.out.println("Shortest Word: " + shortest.toString().replace("[", "").replace("]", ""));
+		System.out.println("\nWord Frequency: \n");
+		frequencies(filteredWords); //prints out the amount of time each unique word occurs
+
+		System.out.println("\nLongest Word: " + longestWord);
+		System.out.println("Shortest Word: " + shortestWord);
 		System.out.println("Average Word Length: " + averageLength);
 		System.out.println("Number of sentences: " + sentences);
 		System.out.println("Unique Words: " + uniqueWords);
-	
+
 		scanner.close();
 	}
 
-	public static boolean isVowel(char character) {
-		if (character == 'a' || character == 'e' || character == 'i' || character == 'o' || character == 'u') { //Checks for all vowels except y
-			return true;
+	public static int sentenceCounter(String userInput) { //determines sentences by looking for ".", "!", "?"
+		int sentences = 0;
+		for (int i = 0; i < userInput.length(); i++) {
+			char c = userInput.charAt(i);
+			if (c == '.' || c == '!' || c == '?') {
+				sentences++;
+			}
 		}
-		else {
-			return false;
-		}
+		return sentences;
 	}
 
-	public static HashMap<String, Integer> unique(ArrayList<String> filtered) {
+	public static int vowelCounter(String userInput) {
+		int totalVowels = 0;
+		for (int i = 0; i < userInput.length(); i++) {
+			char c = userInput.charAt(i);
+			if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') { //Checks for all vowels except y
+				totalVowels++;
+			}
+			if(c == 'y' && i != 0 ) { //Special case for y
+				totalVowels++;
+			}
+		}
+		return totalVowels;
+	}
+
+	public static int spaceCounter(String userInput) {
+		int totalSpaces = 0;
+		for (int i = 0; i < userInput.length(); i++) {
+			if(userInput.charAt(i) == ' ') { //counts the amount of spaces present
+				totalSpaces++;
+			}
+		}
+		return totalSpaces;
+	}
+
+	public static HashMap<String, Integer> unique(ArrayList<String> filteredWords) { //creates a HashMap with the key being the word and value being the frequency
 		HashMap<String, Integer> uniquewords = new HashMap<String, Integer>();
-		for (int i = 0; i < filtered.size(); i++) {
-			if (uniquewords.containsKey(filtered.get(i))) {
-				uniquewords.put(filtered.get(i), uniquewords.get(filtered.get(i)) + 1); //Adds one to the frequency if the same word is present
+		for (int i = 0; i < filteredWords.size(); i++) {
+			if (uniquewords.containsKey(filteredWords.get(i))) {
+				uniquewords.put(filteredWords.get(i), uniquewords.get(filteredWords.get(i)) + 1); //Adds one to the frequency if the same word is present
 			}
 			else {
-				uniquewords.put(filtered.get(i), 1); //Adds to the unique words if not present
+				uniquewords.put(filteredWords.get(i), 1); //Adds to the unique words if not present
 			}
 		}
 		return uniquewords;
 	}
 
-	public static void frequencies(ArrayList<String> filtered) {
-		HashMap<String, Integer> frequencies = unique(filtered);
-		ArrayList<String> isSeen = new ArrayList<String>(); //temporaroy storage of words used
+	public static void frequencies(ArrayList<String> filteredWords) { //Outputs the freqeuncies list
+		HashMap<String, Integer> frequencies = unique(filteredWords);
+		ArrayList<String> isSeen = new ArrayList<String>(); //temporary storage of words used
 		int count = 0;
-		for (int i = 0; i < filtered.size(); i++) {
-			String currentWord = filtered.get(i);
+		for (int i = 0; i < filteredWords.size(); i++) {
+			String currentWord = filteredWords.get(i);
 			if (!isSeen.contains(currentWord)) {
 				count = frequencies.get(currentWord);
 				isSeen.add(currentWord);
 				System.out.println(currentWord + " - " + count); //outputs word freuency
-				
+
 			}
+		}
 	}
-	}	
+
+	public static double averageLength(String[] unfilteredWords) { //Calculates sum of all words
+		double averageLength = 0;
+		for (int i = 0; i < unfilteredWords.length; i++) {
+			averageLength += unfilteredWords[i].length();
+		}
+		return averageLength = averageLength / unfilteredWords.length;
+	}
+
+	public static ArrayList<String> maxLength (ArrayList<String> filteredWords) { //determines longest word
+		int maxLength = filteredWords.get(0).length();
+		for (int i = 0; i < filteredWords.size(); i ++) { //compares all lengths of all words to determine largest value
+			String word = filteredWords.get(i);
+			if (maxLength < word.length()) {
+				maxLength = word.length();
+			}
+		}
+
+		ArrayList<String> longest = new ArrayList<String>();
+		for (int i = 0; i < filteredWords.size(); i ++) { 
+			String word = filteredWords.get(i);
+			if (word.length() == maxLength && !longest.contains(word)) { //finds all words with the longest length
+				longest.add(word);
+			}
+		}
+		return longest;
+	}
+
+	public static ArrayList<String> shortestWord (ArrayList<String> filteredWords) { //determines shortest word
+		int minLength = filteredWords.get(0).length();
+		for (int i = 0; i < filteredWords.size(); i ++) { //compares all lengths of all words to determine smallest value
+			String word = filteredWords.get(i);
+			if (minLength > word.length()) {
+				minLength = word.length();
+			}
+		}
+
+		ArrayList<String> shortest = new ArrayList<String>();
+		for (int i = 0; i < filteredWords.size(); i ++) { 
+			String word = filteredWords.get(i);
+			if(word.length() == minLength && !shortest.contains(word)) { //finds all words with the smallest length
+				shortest.add(word);
+			}
+		}
+		return shortest;
+	}
 }
