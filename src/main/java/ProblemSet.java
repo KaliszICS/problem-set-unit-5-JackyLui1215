@@ -6,7 +6,7 @@
 
         * Date Created: May 12, 2026
 
-        * Date Last Modified: May 15, 2026
+        * Date Last Modified: May 17, 2026
 
         */
 
@@ -49,7 +49,7 @@ public class ProblemSet {
 		int totalSpaces = spaceCounter(original);
 		int uniqueWords = unique(filteredWords).size();
 		Double averageLength = averageLength(unfilteredWords);
-		String longestWord = maxLength(filteredWords).toString().replace("[", "").replace("]", "");
+		String longestWord = longestWord(filteredWords).toString().replace("[", "").replace("]", "");
 		String shortestWord = shortestWord(filteredWords).toString().replace("[", "").replace("]", "");
 		
 		//OUTPUT
@@ -140,7 +140,7 @@ public class ProblemSet {
 		return averageLength = averageLength / unfilteredWords.length;
 	}
 
-	public static ArrayList<String> maxLength (ArrayList<String> filteredWords) { //determines longest word
+	public static ArrayList<String> longestWord (ArrayList<String> filteredWords) { //determines longest word
 		int maxLength = filteredWords.get(0).length();
 		for (int i = 0; i < filteredWords.size(); i ++) { //compares all lengths of all words to determine largest value
 			String word = filteredWords.get(i);
