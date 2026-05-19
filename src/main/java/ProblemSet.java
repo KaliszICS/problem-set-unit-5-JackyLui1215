@@ -36,7 +36,7 @@ public class ProblemSet {
 		}
 
 		if (filteredWords.size() == 0 || unfilteredWords.length == 0) { //ensures input is not blank
-			System.out.println("No valid word was detected.");
+			System.out.println("No valid text was detected.");
 			scanner.close();
 			return;
 		}
@@ -45,7 +45,7 @@ public class ProblemSet {
 		int totalCharacters = original.length();
 		int totalWords = unfilteredWords.length;
 		int sentences = sentenceCounter(original);
-		int totalVowels = vowelCounter(original);
+		int totalVowels = vowelCounter(unfilteredWords);
 		int totalSpaces = spaceCounter(original);
 		int uniqueWords = unique(filteredWords).size();
 		Double averageLength = averageLength(unfilteredWords);
@@ -80,16 +80,21 @@ public class ProblemSet {
 		return sentences;
 	}
 
-	public static int vowelCounter(String userInput) {
+	public static int vowelCounter(String[] userInput) {
 		int totalVowels = 0;
-		for (int i = 0; i < userInput.length(); i++) {
-			char c = userInput.charAt(i);
+		for (int i = 0; i < userInput.length; i++) { //loops through words
+		String word = userInput[i];
+		if (word.length() != 0) { 
+			for (int b = 0; b < word.length(); b++) { //loops through characters
+			char c = word.charAt(b);
 			if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') { //Checks for all vowels except y
 				totalVowels++;
 			}
-			if(c == 'y' && i != 0 ) { //Special case for y
+			if(c == 'y' && word.charAt(0) != 'y') { //Special case for y
 				totalVowels++;
 			}
+		}
+		}
 		}
 		return totalVowels;
 	}
