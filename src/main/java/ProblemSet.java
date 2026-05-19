@@ -18,8 +18,14 @@ public class ProblemSet {
 	public static void main(String args[]) {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Welcome to the Text Analyzer! \n");
-		System.out.print("Please eneter a sentence or paragraph: ");
+		System.out.print("Please enter a sentence or paragraph: ");
 		String userInput = scanner.nextLine();
+
+		if (userInput.isBlank()) { //ensures input is not blank
+			System.out.println("No valid text was detected.");
+			scanner.close();
+			return;
+		}
 
 		String original = userInput;
 		userInput = userInput.replaceAll("[,!.?;:']", "").toLowerCase(); //removes all puntuation and makes all characters lowercase
@@ -35,8 +41,10 @@ public class ProblemSet {
 			}
 		}
 
-		if (filteredWords.size() == 0 || unfilteredWords.length == 0) { //ensures input is not blank
-			System.out.println("No valid text was detected.");
+		if (filteredWords.isEmpty()) { //ensures input is not blank
+			System.out.println("Total characters: " + original.length());
+			System.out.println("Total words: " + unfilteredWords.length);
+			System.out.println("Word was filtered out.");
 			scanner.close();
 			return;
 		}
@@ -90,7 +98,7 @@ public class ProblemSet {
 			if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') { //Checks for all vowels except y
 				totalVowels++;
 			}
-			if(c == 'y' && word.charAt(0) != 'y') { //Special case for y
+			if(c == 'y' && b != 0) { //Special case for y
 				totalVowels++;
 			}
 		}
@@ -142,7 +150,7 @@ public class ProblemSet {
 		for (int i = 0; i < unfilteredWords.length; i++) {
 			averageLength += unfilteredWords[i].length();
 		}
-		return averageLength = averageLength / unfilteredWords.length;
+		return averageLength / unfilteredWords.length;
 	}
 
 	public static ArrayList<String> longestWord (ArrayList<String> filteredWords) { //determines longest word
