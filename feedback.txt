@@ -1,0 +1,11 @@
+K(30%): 100
+I(30%): 92
+C(10%): 100
+A(30%): 92
+95.8%
+
+Should remove commons words after getting original 4 values. Total vowels and space should still show when input is empty or just spaces(values should just be 0).
+
+Values for option 3 should still appear just have no values after them.
+Y is not a vowel.
+Should include all punctuation not just one the ones in the example.
